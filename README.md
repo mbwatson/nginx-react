@@ -1,7 +1,7 @@
-# Express-Served React App
+# Nginx-Served React App
 
 
-This is a `create-react-app`-generated React application deployed with Express, running in a container built from [the official Node image](https://hub.docker.com/_/node/).
+This is a `create-react-app`-generated React application deployed with Node's development server for development and served by [Nginx](https://hub.docker.com/_/nginx/) after building in [Node](https://hub.docker.com/_/node/).
 
 ## What This Accomplishes
 
@@ -13,8 +13,8 @@ Replace everything in the `/app` directory with your project, ensuring that the 
 
 Tagging the builds and naming the running containers can be nice, as can running the containers detached. Thus those options appear in the examples below, as do a few of these other common things:
 
-- There are two types of Dockerfiles--one designed for a development build and two for production builds. Each build command references the appropriate file.
-- By default, the application will run on port 3000. Thus a common configuration will forward the host's port 80 onto the container's 3000, making the application accessible at `http://localhost` on the host. Of course, other ports are fine.
+- There are two types of Dockerfiles--one designed for a development build and one for a production build. Each build command references the appropriate file.
+- By default, the application will run on port 3000. Thus a common configuration will forward the host's port 80 onto the container's 3000, making the application accessible at `http://localhost` on the host. Of course, other ports are fine. In the production build, we pass traffic right through port 80.
 
 ## Development
 
@@ -37,7 +37,7 @@ For deployment, we employ multistage builds. This will allows for building the w
 ##### Build
 
 ```bash
-$ docker build -t react-app/prod -f Dockerfile-prod-nginx .
+$ docker build -t react-app/prod -f Dockerfile-prod .
 ```
 
 ##### Run
