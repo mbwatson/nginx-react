@@ -1,7 +1,7 @@
 # Nginx-Served React App
 
 
-This is a `create-react-app`-generated React application deployed with Node's development server for development and served by [Nginx](https://hub.docker.com/_/nginx/) after building in [Node](https://hub.docker.com/_/node/).
+This is a `create-react-app`-generated React application deployed with Node's development server for development and served by [Nginx](https://hub.docker.com/_/nginx/) after building in [Node](https://hub.docker.com/_/node/) for production.
 
 ## What This Accomplishes
 
