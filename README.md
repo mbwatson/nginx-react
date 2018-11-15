@@ -9,25 +9,44 @@ No frills--get your basic React application up and running quickly.
 
 ## How to Use This
 
-Replace everything in the `/app` directory with your project, ensuring that the necessary requirements are outlined for Node in the `package.json` file.
+Your application will live in a directory adjacent to the docker-related files, as shown in the tree shown below.
 
-Tagging the builds and naming the running containers can be nice, as can running the containers detached. Thus those options appear in the examples below, as do a few of these other common things:
+```
+$ tree -L 2
+.
+├── app         # <-- The "app" directory is the root of your React application
+│   ├── node_modules
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   └── src
+├── docker-compose-prod.yml
+├── docker-compose.yml
+├── Dockerfile-dev
+├── Dockerfile-prod
+└── README.md
+```
 
-- There are two types of Dockerfiles--one designed for a development build and one for a production build. Each build command references the appropriate file.
-- By default, the application will run on port 3000. Thus a common configuration will forward the host's port 80 onto the container's 3000, making the application accessible at `http://localhost` on the host. Of course, other ports are fine. In the production build, we pass traffic right through port 80.
+Ensure that the necessary requirements are outlined for Node in the `package.json` file.
+
+There are two flavors of docker-compose files and of Dockerfiles--one of each for development and production builds. Each docker-compose command references the appropriate file.
+
+By default, the application will run on port 3000. Thus a common configuration will forward the host's port 80 onto the container's 3000, making the application accessible at `http://localhost` on the host. Of course, other ports are fine. In the production build, we pass traffic right through port 80.
+
+We mount the `app` directory so live editing can be used to adjust your application while the containers are running.
 
 ## Development
 
 ##### Build
 
 ```bash
-$ docker build -t react-app/dev -f Dockerfile-dev .
+$ docker-compose build
 ```
 
 ##### Run
 
 ```bash
-$ docker run -p 80:3000 --name webapp-dev -d react-app/dev
+$ docker-compose up
 ```
 
 ## Production
@@ -37,7 +56,7 @@ For deployment, we employ multistage builds. This will allows for building the w
 ##### Build
 
 ```bash
-$ docker build -t react-app/prod -f Dockerfile-prod .
+$ docker-compose -f docker-compose-prod.yml build
 ```
 
 ##### Run
@@ -45,7 +64,7 @@ $ docker build -t react-app/prod -f Dockerfile-prod .
 Here, we forward the host port 80 to the container's port 80 since that is the default port for HTTP access expected by Nginx.
 
 ```bash
-$ docker run --name react-app -p 80:80 -d react-app/prod 
+$ docker-compose -f docker-compose-prod.yml up
 ```
 
 ## Additional References
